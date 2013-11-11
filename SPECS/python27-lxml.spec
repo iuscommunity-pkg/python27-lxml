@@ -6,7 +6,7 @@
 %define name python%{pybase_ver}-lxml
 
 Name:           %{name} 
-Version:        3.2.3
+Version:        3.2.4
 Release:        1.ius%{?dist}
 Summary:        ElementTree-like Python bindings for libxml2 and libxslt
 
@@ -49,6 +49,9 @@ rm -rf %{buildroot}
 %{python_sitearch}/*
 
 %changelog
+* Mon Nov 11 2013 Ben Harper <ben.harper@rackspace.com> - 3.2.4-1.ius
+- Latest sources from upstream
+
 * Mon Jul 29 2013 Ben Harper <ben.harper@rackspace.com> - 3.2.3-1.ius
 - Latest sources from upstream
 
