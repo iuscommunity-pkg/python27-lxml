@@ -13,7 +13,6 @@ Vendor:         IUS Community Project
 Group:          Development/Libraries
 License:        BSD
 URL:            http://lxml.de/
-URL:            http://codespeak.net/lxml/
 Source0:        http://cheeseshop.python.org/packages/source/l/lxml/lxml-%{version}.tar.gz
 #Source0:        http://codespeak.net/lxml/lxml-%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
