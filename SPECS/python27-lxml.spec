@@ -16,9 +16,9 @@ URL:            http://codespeak.net/lxml/
 Source0:        http://cheeseshop.python.org/packages/source/l/lxml/lxml-%{version}.tar.gz
 #Source0:        http://codespeak.net/lxml/lxml-%{version}.tgz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 BuildRequires:  libxslt-devel
 BuildRequires:  python%{pybase_ver}, python%{pybase_ver}-setuptools, python%{pybase_ver}-devel
+
 
 %description
 lxml provides a Python binding to the libxslt and libxml2 libraries.
@@ -28,25 +28,30 @@ bindings.  In particular, lxml deals with Python Unicode strings
 rather than encoded UTF-8 and handles memory management automatically,
 unlike the default bindings.
 
+
 %prep
 %setup -q -n lxml-%{version}
-
 chmod a-x doc/rest2html.py
+
 
 %build
 CFLAGS="%{optflags}" %{__python} -c 'import setuptools; execfile("setup.py")' build
+
 
 %install
 rm -rf %{buildroot}
 %{__python} -c 'import setuptools; execfile("setup.py")' install --skip-build --root %{buildroot}
 
+
 %clean
 rm -rf %{buildroot}
+
 
 %files
 %defattr(-,root,root,-)
 %doc LICENSES.txt PKG-INFO CREDITS.txt CHANGES.txt doc/
 %{python_sitearch}/*
+
 
 %changelog
 * Fri Apr 18 2014 Ben Harper <ben.harper@rackspace.com> - 3.3.5-1.ius
