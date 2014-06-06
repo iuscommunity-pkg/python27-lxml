@@ -12,6 +12,7 @@ Summary:        ElementTree-like Python bindings for libxml2 and libxslt
 Vendor:         IUS Community Project
 Group:          Development/Libraries
 License:        BSD
+URL:            http://lxml.de/
 URL:            http://codespeak.net/lxml/
 Source0:        http://cheeseshop.python.org/packages/source/l/lxml/lxml-%{version}.tar.gz
 #Source0:        http://codespeak.net/lxml/lxml-%{version}.tgz
