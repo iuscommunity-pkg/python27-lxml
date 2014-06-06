@@ -1,23 +1,27 @@
-%define __python /usr/bin/python2.7
-%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+%global pymajor 2
+%global pyminor 7
+%global pyver %{pymajor}.%{pyminor}
+%global iusver %{pymajor}%{pyminor}
+%global __python2 %{_bindir}/python%{pyver}
+%global python2_sitelib  %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+%global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
+%global __os_install_post %{__python27_os_install_post}
+%global srcname lxml
+%global src %(echo %{srcname} | cut -c1)
 
-%define pybase_ver 27
-%define real_name python-lxml
-%define name python%{pybase_ver}-lxml
-
-Name:           %{name} 
+Name:           python%{iusver}-%{srcname}
 Version:        3.3.5
-Release:        1.ius%{?dist}
+Release:        2.ius%{?dist}
 Summary:        ElementTree-like Python bindings for libxml2 and libxslt
 Vendor:         IUS Community Project
 Group:          Development/Libraries
 License:        BSD
 URL:            http://lxml.de/
-Source0:        http://cheeseshop.python.org/packages/source/l/lxml/lxml-%{version}.tar.gz
-#Source0:        http://codespeak.net/lxml/lxml-%{version}.tgz
+Source0:        https://pypi.python.org/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libxslt-devel
-BuildRequires:  python%{pybase_ver}, python%{pybase_ver}-setuptools, python%{pybase_ver}-devel
+BuildRequires:  python%{iusver}-devel
+BuildRequires:  python%{iusver}-setuptools
 
 
 %description
@@ -30,27 +34,28 @@ unlike the default bindings.
 
 
 %prep
-%setup -q -n lxml-%{version}
+%setup -q -n %{srcname}-%{version}
+find -name '*.py' -type f -print0 | xargs -0 sed -i '1s|python|&%{pyver}|'
 chmod a-x doc/rest2html.py
 
 
 %build
-CFLAGS="%{optflags}" %{__python} -c 'import setuptools; execfile("setup.py")' build
+CFLAGS=$RPM_OPT_FLAGS %{__python2} setup.py build
 
 
 %install
-rm -rf %{buildroot}
-%{__python} -c 'import setuptools; execfile("setup.py")' install --skip-build --root %{buildroot}
+%{__rm} -rf %{buildroot}
+%{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
 
 
 %clean
-rm -rf %{buildroot}
+%{__rm} -rf %{buildroot}
 
 
 %files
 %defattr(-,root,root,-)
 %doc LICENSES.txt PKG-INFO CREDITS.txt CHANGES.txt doc/
-%{python_sitearch}/*
+%{python2_sitearch}/*
 
 
 %changelog
