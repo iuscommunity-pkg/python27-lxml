@@ -9,7 +9,7 @@ Name:           %{name}
 Version:        3.3.5
 Release:        1.ius%{?dist}
 Summary:        ElementTree-like Python bindings for libxml2 and libxslt
-
+Vendor:         IUS Community Project
 Group:          Development/Libraries
 License:        BSD
 URL:            http://codespeak.net/lxml/
