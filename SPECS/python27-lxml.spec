@@ -59,6 +59,11 @@ CFLAGS=$RPM_OPT_FLAGS %{__python2} setup.py build
 
 
 %changelog
+* Fri Jun 06 2014 Carl George <carl.george@rackspace.com> - 3.3.5-2.ius
+- Update upstream url
+- Override __os_install_post to fix .pyc/pyo magic
+- Implement python packaging best practices
+
 * Fri Apr 18 2014 Ben Harper <ben.harper@rackspace.com> - 3.3.5-1.ius
 - Latest sources from upstream
 
