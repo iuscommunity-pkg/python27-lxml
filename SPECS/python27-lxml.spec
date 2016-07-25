@@ -10,14 +10,14 @@
 %global src %(echo %{srcname} | cut -c1)
 
 Name:           python%{iusver}-%{srcname}
-Version:        3.6.0
+Version:        3.6.1
 Release:        1.ius%{?dist}
 Summary:        ElementTree-like Python bindings for libxml2 and libxslt
 Vendor:         IUS Community Project
 Group:          Development/Libraries
 License:        BSD
 URL:            http://lxml.de/
-Source0:        https://pypi.python.org/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
+Source0:        https://pypi.io/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libxslt-devel
 BuildRequires:  python%{iusver}-devel
@@ -59,6 +59,10 @@ CFLAGS=$RPM_OPT_FLAGS %{__python2} setup.py build
 
 
 %changelog
+* Mon Jul 25 2016 Ben Harper <ben.harper@rackspace.com> - 3.7.0-1.ius
+- Latest upstream
+- update Source0 URL
+
 * Mon Mar 21 2016 Ben Harper <ben.harper@rackspace.com> - 3.6.0-1.ius
 - Latest upstream
 
