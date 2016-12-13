@@ -3,7 +3,6 @@
 %global pyver %{pymajor}.%{pyminor}
 %global iusver %{pymajor}%{pyminor}
 %global __python2 %{_bindir}/python%{pyver}
-%global python2_sitelib  %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
 %global __os_install_post %{__python27_os_install_post}
 %global srcname lxml
@@ -16,7 +15,7 @@ Summary:        ElementTree-like Python bindings for libxml2 and libxslt
 Vendor:         IUS Community Project
 Group:          Development/Libraries
 License:        BSD
-URL:            http://lxml.de/
+URL:            http://lxml.de
 Source0:        https://pypi.io/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  libxslt-devel
@@ -40,7 +39,7 @@ chmod a-x doc/rest2html.py
 
 
 %build
-CFLAGS=$RPM_OPT_FLAGS %{__python2} setup.py build
+CFLAGS="%{optflags}" %{__python2} setup.py build
 
 
 %install
@@ -53,7 +52,6 @@ CFLAGS=$RPM_OPT_FLAGS %{__python2} setup.py build
 
 
 %files
-%defattr(-,root,root,-)
 %doc LICENSES.txt PKG-INFO CREDITS.txt CHANGES.txt doc/
 %{python2_sitearch}/*
 
