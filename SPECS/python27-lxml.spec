@@ -190,7 +190,7 @@ CFLAGS=$RPM_OPT_FLAGS %{__python2} setup.py build
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1.3.6-2
 - Autorebuild for GCC 4.3
 
-* Mon Nov  4 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.3.6-1
+* Sun Nov  4 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.3.6-1
 - Update to 1.3.6.
 
 * Mon Oct 22 2007 Jeffrey C. Ollie <jeff@ocjtech.us> - 1.3.5-1
