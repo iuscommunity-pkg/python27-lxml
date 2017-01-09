@@ -9,7 +9,7 @@
 %global src %(echo %{srcname} | cut -c1)
 
 Name:           python%{iusver}-%{srcname}
-Version:        3.7.0
+Version:        3.7.2
 Release:        1.ius%{?dist}
 Summary:        ElementTree-like Python bindings for libxml2 and libxslt
 Vendor:         IUS Community Project
@@ -57,6 +57,9 @@ CFLAGS="%{optflags}" %{__python2} setup.py build
 
 
 %changelog
+* Mon Jan 09 2017 Ben Harper <ben.harper@rackspace.com> - 3.7.2-1.ius
+- Latest upstream
+
 * Tue Dec 13 2016 Carl George <carl.george@rackspace.com> - 3.7.0-1.ius
 - Latest upstream
 
