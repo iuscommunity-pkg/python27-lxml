@@ -1,41 +1,43 @@
-%global pymajor 2
-%global pyminor 7
-%global pyver %{pymajor}.%{pyminor}
-%global iusver %{pymajor}%{pyminor}
-%global __python2 %{_bindir}/python%{pyver}
-%global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")
-%global __os_install_post %{__python27_os_install_post}
-%global srcname lxml
-%global src %(echo %{srcname} | cut -c1)
+%global pypi_name lxml
+%global python python27
+%global __python2 %{_bindir}/python2.7
+%global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")
 
-Name:           python%{iusver}-%{srcname}
+# these correspond to the extras_require options in setup.py
+# https://github.com/lxml/lxml/blob/lxml-3.7.2/setup.py#L68-L70
+%bcond_with cssselect
+%bcond_with html5
+%bcond_with htmlsoup
+
+Name:           %{python}-%{pypi_name}
 Version:        3.8.0
 Release:        1.ius%{?dist}
-Summary:        ElementTree-like Python bindings for libxml2 and libxslt
-Vendor:         IUS Community Project
-Group:          Development/Libraries
+Summary:        XML processing library combining libxml2/libxslt with the ElementTree API
 License:        BSD
 URL:            http://lxml.de
-Source0:        https://pypi.io/packages/source/%{src}/%{srcname}/%{srcname}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  libxslt-devel
-BuildRequires:  python%{iusver}-devel
-BuildRequires:  python%{iusver}-setuptools
+Source0:        http://lxml.de/files/%{pypi_name}-%{version}.tgz
+
+# http://lxml.de/installation.html#requirements
+BuildRequires:  libxml2-devel >= 2.7.0
+BuildRequires:  libxslt-devel >= 1.1.23
+BuildRequires:  %{python}-devel
+BuildRequires:  %{python}-setuptools
+
+%{?with_cssselect:Requires: %{python}-cssselect}
+%{?with_html5:Requires: %{python}-html5lib}
+%{?with_htmlsoup:Requires: %{python}-beautifulsoup4}
 
 
 %description
-lxml provides a Python binding to the libxslt and libxml2 libraries.
-It follows the ElementTree API as much as possible in order to provide
-a more Pythonic interface to libxml2 and libxslt than the default
-bindings.  In particular, lxml deals with Python Unicode strings
-rather than encoded UTF-8 and handles memory management automatically,
-unlike the default bindings.
+lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries. It
+provides safe and convenient access to these libraries using the ElementTree It
+extends the ElementTree API significantly to offer support for XPath, RelaxNG,
+XML Schema, XSLT, C14N and much more.To contact the project, go to the project
+home page < or see our bug tracker at case you want to use the current ...
 
 
 %prep
-%setup -q -n %{srcname}-%{version}
-find -name '*.py' -type f -print0 | xargs -0 sed -i '1s|python|&%{pyver}|'
-chmod a-x doc/rest2html.py
+%autosetup -n %{pypi_name}-%{version}
 
 
 %build
@@ -43,17 +45,14 @@ CFLAGS="%{optflags}" %{__python2} setup.py build
 
 
 %install
-%{__rm} -rf %{buildroot}
 %{__python2} setup.py install --optimize 1 --skip-build --root %{buildroot}
 
 
-%clean
-%{__rm} -rf %{buildroot}
-
-
 %files
-%doc LICENSES.txt PKG-INFO CREDITS.txt CHANGES.txt doc/
-%{python2_sitearch}/*
+%license doc/licenses/ZopePublicLicense.txt LICENSES.txt
+%doc README.rst src/lxml/isoschematron/resources/xsl/iso-schematron-xslt1/readme.txt
+%{python2_sitearch}/%{pypi_name}
+%{python2_sitearch}/%{pypi_name}-%{version}-py?.?.egg-info
 
 
 %changelog
